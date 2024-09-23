@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="edda298a-000c-46eb-9249-6316720694db" name="Default Changelist" comment="" />
+    <list default="true" id="edda298a-000c-46eb-9249-6316720694db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/note" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/META-INF/solution.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade2Res.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/main1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/main2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/solution1/Trade.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/solution1/main1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/solution2/src/Trade2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/solution2/src/Trade2Res.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/solution2/src/main2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/solution2/src/main2.java" beforeDir="false" afterPath="$PROJECT_DIR$/solution2/src/main2.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="2mPmKajNH8pU8fEjBwbKDos2fzK" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/solution2/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -79,18 +106,33 @@
       <option name="presentableId" value="Default" />
       <updated>1726986522307</updated>
       <workItem from="1726986525241" duration="10888000" />
+      <workItem from="1727052753320" duration="534000" />
+      <workItem from="1727053803338" duration="2784000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/solution2/src/main2.java</url>
-          <line>111</line>
+          <line>120</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>

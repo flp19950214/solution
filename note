@@ -1,0 +1,17 @@
+D:\workspace\solution\solution1>javac main1.java
+注: main1.java使用了未经检查或不安全的操作。
+注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+
+D:\workspace\solution\solution1>java main1 "D:\\RaceFile\\0001.csv"
+21:00,ZCE,51372,SA401
+
+
+***********************************************
+
+
+D:\workspace\solution\solution2\src>javac main2.java
+注: main2.java使用了未经检查或不安全的操作。
+注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+
+D:\workspace\solution\solution2\src>java main2 "D:\\RaceFile\\0001.csv"
+21:10:33.000,21:12:44.500,nr2401,2000000.00

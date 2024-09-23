@@ -19,15 +19,18 @@ public class main2 {
 
 
     static ThreadPoolExecutor threadPool =
-            new ThreadPoolExecutor(3, 3, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+            new ThreadPoolExecutor(2, 2, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
     static ThreadPoolExecutor threadPool2 =
-            new ThreadPoolExecutor(0, 3, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+            new ThreadPoolExecutor(0, 2, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
     static ThreadPoolExecutor threadPool3 =
-            new ThreadPoolExecutor(0, 3, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+            new ThreadPoolExecutor(0, 2, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
 
 
     static volatile double profit = 0;
     static final String DELIMITER = ",";
+
+    static boolean isUseThreadPool3 = false;
+
     static Trade2Res trade2Res = new Trade2Res();
     static Trade2 tradeOpen = new Trade2();
     static Trade2 tradeClose = new Trade2();
@@ -58,9 +61,14 @@ public class main2 {
         threadPool2.shutdown();
         while (!threadPool2.isTerminated()) {
         }
-        threadPool3.shutdown();
-        while (!threadPool3.isTerminated()) {
+        if (isUseThreadPool3) {
+            threadPool3.shutdown();
+            while (!threadPool3.isTerminated()) {
+            }
+        } else {
+            threadPool3.shutdownNow();
         }
+
         assembleRes();
         System.out.println(trade2Res.toString());
     }
@@ -91,37 +99,40 @@ public class main2 {
     public static void handleData(ArrayList<Trade2> collect) {
         int startIndex = 0;
         int endIndex = 0;
-        int num=5000;
+        int num = 5000;
         if (collect.size() > num) {
+            isUseThreadPool3 = true;
             for (int i = startIndex; i < collect.size(); i = startIndex) {
                 int finalStartIndex = startIndex;
-                endIndex = startIndex+num;
-                endIndex=endIndex>collect.size()?collect.size():endIndex;
+                endIndex = startIndex + num;
+                endIndex = endIndex > collect.size() ? collect.size() : endIndex;
                 int finalEndIndex = endIndex;
                 threadPool3.execute(() -> {
                     handleData(collect, finalStartIndex, finalEndIndex);
                 });
                 startIndex += num;
             }
-        }else{
+        } else {
             handleData(collect, 0, collect.size());
         }
     }
 
     public static void handleData(ArrayList<Trade2> collect, int startIndex, int endIndex) {
         for (int i = startIndex; i < endIndex; i++) {
-            Trade2 trade1 = collect.get(i);
-            if (trade1 == null) continue;
-            if (trade1.bidVolume == 0 || trade1.askVolume == 0) {
+            Trade2 trade1_1 = collect.get(i);
+            if (trade1_1 == null) continue;
+            if (trade1_1.bidVolume == 0 || trade1_1.askVolume == 0) {
                 continue;
             }
             for (int j = i + 1; j < collect.size(); j++) {
+                Trade2 trade1 = trade1_1;
                 Trade2 trade2 = collect.get(j);
                 if (trade2.bidVolume == 0 || trade2.askVolume == 0) {
                     continue;
                 }
                 if (trade2.compareTo(trade1) <= 0) {
-                    continue;
+                    trade2=trade1_1;
+                    trade1=collect.get(i);
                 }
                 double profit1 = 0;
                 if (trade2.bidPrice > trade1.askPrice) {
