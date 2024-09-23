@@ -14,9 +14,9 @@ public class main1 {
     static int threadNum = Runtime.getRuntime().availableProcessors();
 
     static ThreadPoolExecutor threadPool =
-            new ThreadPoolExecutor(3, 3, 1, TimeUnit.SECONDS, new LinkedBlockingDeque());
+            new ThreadPoolExecutor(3, 3, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque());
     static ThreadPoolExecutor threadPool2 =
-            new ThreadPoolExecutor(0, 3, 1, TimeUnit.SECONDS, new LinkedBlockingDeque());
+            new ThreadPoolExecutor(0, 3, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque());
     static final String MARK = "_$_";
     static final String DELIMITER = ",";
     static Trade result = new Trade();

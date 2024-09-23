@@ -2,28 +2,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 
 
 public class main2 {
 
-    static ConcurrentHashMap<String, ArrayList<Trade2>> hashMap = new ConcurrentHashMap();
+    static ConcurrentHashMap<String, CopyOnWriteArraySet<Trade2>> hashMap = new ConcurrentHashMap();
     static int threadNum = Runtime.getRuntime().availableProcessors();
 
 
     static ThreadPoolExecutor threadPool =
-            new ThreadPoolExecutor(2, 2, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+            new ThreadPoolExecutor(2, 3, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>());
     static ThreadPoolExecutor threadPool2 =
-            new ThreadPoolExecutor(0, 2, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+            new ThreadPoolExecutor(0, 2, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>());
     static ThreadPoolExecutor threadPool3 =
-            new ThreadPoolExecutor(0, 2, 1, TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+            new ThreadPoolExecutor(0, 2, 10, TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>());
 
 
     static volatile double profit = 0;
@@ -34,6 +28,7 @@ public class main2 {
     static Trade2Res trade2Res = new Trade2Res();
     static Trade2 tradeOpen = new Trade2();
     static Trade2 tradeClose = new Trade2();
+    static int num = 5000;
 
     public static void setProfit(double profitTemp, Trade2 trade1, Trade2 trade2) {
         if (profitTemp > profit) {
@@ -44,8 +39,9 @@ public class main2 {
             }
         }
     }
-
+    static long startTime = System.currentTimeMillis();
     public static void main(String[] args) {
+
         String path;
         if (args.length == 0) {
             path = "D:\\RaceFile\\0001.csv";
@@ -53,7 +49,8 @@ public class main2 {
             path = args[0];
         }
         readFile(path);
-        for (HashMap.Entry<String, ArrayList<Trade2>> item : hashMap.entrySet()) {
+        System.out.println(System.currentTimeMillis()-startTime);
+        for (HashMap.Entry<String, CopyOnWriteArraySet<Trade2>> item : hashMap.entrySet()) {
             threadPool2.execute(() -> {
                 handleData(item.getValue());
             });
@@ -71,6 +68,7 @@ public class main2 {
 
         assembleRes();
         System.out.println(trade2Res.toString());
+        System.out.println(System.currentTimeMillis()-startTime);
     }
 
     public static void readFile(String path) {
@@ -82,7 +80,7 @@ public class main2 {
                 String finalLine = line;
                 threadPool.execute(() -> {
                     try {
-                        handleData(finalLine);
+                        handleReadData(finalLine);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -96,10 +94,10 @@ public class main2 {
         }
     }
 
-    public static void handleData(ArrayList<Trade2> collect) {
+    public static void handleData(CopyOnWriteArraySet<Trade2> set) {
+        ArrayList<Trade2> collect = new ArrayList<>(set);
         int startIndex = 0;
         int endIndex = 0;
-        int num = 5000;
         if (collect.size() > num) {
             isUseThreadPool3 = true;
             for (int i = startIndex; i < collect.size(); i = startIndex) {
@@ -119,20 +117,15 @@ public class main2 {
 
     public static void handleData(ArrayList<Trade2> collect, int startIndex, int endIndex) {
         for (int i = startIndex; i < endIndex; i++) {
-            Trade2 trade1_1 = collect.get(i);
-            if (trade1_1 == null) continue;
-            if (trade1_1.bidVolume == 0 || trade1_1.askVolume == 0) {
+            Trade2 trade1 = collect.get(i);
+            if (trade1 == null) continue;
+            if (trade1.bidVolume == 0 || trade1.askVolume == 0) {
                 continue;
             }
-            for (int j = i + 1; j < collect.size(); j++) {
-                Trade2 trade1 = trade1_1;
+            for (int j = 0; j < collect.size(); j++) {
                 Trade2 trade2 = collect.get(j);
                 if (trade2.bidVolume == 0 || trade2.askVolume == 0) {
                     continue;
-                }
-                if (trade2.compareTo(trade1) <= 0) {
-                    trade2=trade1_1;
-                    trade1=collect.get(i);
                 }
                 double profit1 = 0;
                 if (trade2.bidPrice > trade1.askPrice) {
@@ -163,13 +156,18 @@ public class main2 {
     }
 
 
-    public static void handleData(String line) {
+    public static void handleReadData(String line) {
         String[] columns = line.split(DELIMITER);
         String instrumentID = columns[21];
         Trade2 trade = new Trade2(columns[19], columns[20],
                 Double.parseDouble(columns[22]), Integer.parseInt(columns[23]), Double.parseDouble(columns[24]), Integer.parseInt(columns[25]),
                 columns[21], Integer.parseInt(columns[45]));
-        ArrayList<Trade2> orDefault = hashMap.getOrDefault(instrumentID, new ArrayList<>());
+        CopyOnWriteArraySet<Trade2> orDefault;
+        if(hashMap.get(instrumentID) == null || hashMap.get(instrumentID).size()==0){
+            orDefault = new CopyOnWriteArraySet<>();
+        }else{
+            orDefault =  hashMap.get(instrumentID);
+        }
         orDefault.add(trade);
         hashMap.put(instrumentID, orDefault);
     }
@@ -208,7 +206,10 @@ class Trade2 implements Comparable<Trade2> {
         if (this.updateTime.compareTo(o.updateTime) == 0 && this.updateMillisec.compareTo(o.updateMillisec) > 0) {
             return 1;
         }
-        return 0;
+        if (this.updateTime.compareTo(o.updateTime) == 0 && this.updateMillisec.compareTo(o.updateMillisec) == 0) {
+            return 0;
+        }
+        return -1;
     }
 
     @Override
@@ -243,5 +244,74 @@ class Trade2Res {
         sb.append(openTime).append(".").append(String.format("%-3s", openMillisec).replace(" ", "0")).append(",").append(closeTime).append(".").append(String.format("%-3s", closeMillisec).replace(" ", "0")).append(",")
                 .append(instrumentID).append(",").append(String.format("%.2f", Math.round(profit * 100.0) / 100.0));
         return sb.toString();
+    }
+}
+
+class MyArrayList{
+    private Trade2[] array;
+    private int size;
+    public MyArrayList(){
+        array=new Trade2[10];
+        size=0;
+    }
+    public void add(Trade2 ele){
+        if(size==array.length){
+            expendArray();
+        }
+        //从小到大排序
+
+        array[size++]=ele;
+    }
+    public Trade2 get(int index){
+        if(index<0||index>size){
+            throw new IndexOutOfBoundsException();
+        }
+        return array[index];
+    }
+    public void expendArray(){
+        Trade2[] newArray = new Trade2[array.length * 2];
+        System.arraycopy(array, 0, newArray, 0, size);
+        array = newArray;
+    }
+}
+
+class SortedUniqueLinkedList<T> {
+    private LinkedList<Trade2> list;
+
+    public SortedUniqueLinkedList() {
+        list = new LinkedList<>();
+    }
+
+    public void add(Trade2 num) {
+        // 使用二分搜索找到应该插入的位置
+        int index = search(num);
+        // 如果列表中已存在该元素，则不进行插入
+        if (index < 0) {
+            return;
+        }
+        list.add(index, num);
+    }
+
+    public int size(){
+        return list.size();
+    }
+    public Trade2 get(int index){
+        return list.get(index);
+    }
+
+    private int search(Trade2 num) {
+        int left = 0;
+        int right = list.size() - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (list.get(mid).compareTo(num)==0) {
+                return -1; // 找到了相同的元素，不需要插入
+            } else if (list.get(mid).compareTo(num) > 0) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left; // 返回应该插入的位置
     }
 }

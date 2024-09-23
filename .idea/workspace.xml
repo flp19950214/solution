@@ -2,20 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="edda298a-000c-46eb-9249-6316720694db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/note" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs" beforeDir="false" afterPath="$PROJECT_DIR$/docs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/solution/META-INF/solution.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade2Res.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/solution/main1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/solution/main2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/solution1/Trade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/solution1/main1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/solution2/src/Trade2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/solution2/src/Trade2Res.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/solution2/src/main2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/solution/Trade2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/Trade2Res.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/solution/Trade2Res.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/main1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/solution/main1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/solution/main2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/solution/main2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/solution1/main1.java" beforeDir="false" afterPath="$PROJECT_DIR$/solution1/main1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/solution2/src/main2.java" beforeDir="false" afterPath="$PROJECT_DIR$/solution2/src/main2.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -107,8 +101,16 @@
       <updated>1726986522307</updated>
       <workItem from="1726986525241" duration="10888000" />
       <workItem from="1727052753320" duration="534000" />
-      <workItem from="1727053803338" duration="2784000" />
+      <workItem from="1727053803338" duration="10428000" />
     </task>
+    <task id="LOCAL-00001" summary="test">
+      <created>1727056613531</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727056613531</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,13 +129,27 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
+          <url>jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/util/TreeMap.java</url>
+          <line>1210</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/solution2/src/main2.java</url>
+          <line>168</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/solution2/src/main2.java</url>
           <line>120</line>
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
